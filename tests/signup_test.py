@@ -1,30 +1,28 @@
-import random
-import string
-from time import sleep
-from selenium import webdriver
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
-driver = webdriver.Chrome()
-driver.maximize_window()
-def generate_email():
-    random_digits = random.randint(100, 999)
-    return f"nelli_malyutina_12_{random_digits}@yandex.ru"
-def generate_password(length=6):
-    characters = string.ascii_letters + string.digits
-    return ''.join(random.sample(characters, length))
-email = generate_email()
-password = generate_password()
-driver.get('https://stellarburgers.nomoreparties.site/')
-driver.find_element(By.LINK_TEXT, "Личный Кабинет").click()
-driver.find_element(By.LINK_TEXT, "Зарегистрироваться").click()
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/fieldset[1]/div/div/input").send_keys("Nelli")
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/fieldset[2]/div/div/input").send_keys(email)
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/fieldset[3]/div/div/input").send_keys(password)
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/button").click()
-sleep(2)
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/fieldset[1]/div/div/input").send_keys(email)
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/fieldset[2]/div/div/input").send_keys(password)
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/button").click()
-sleep(2)
-driver.find_element(By.LINK_TEXT, "Личный Кабинет").click()
-sleep(5)
-driver.quit()
+from helpers import generate_email, generate_name, generate_password
+from urls import UrlsList
+from locators import TestLocators
+def test_sing(driver):
+    name = generate_name()
+    mail = generate_email()
+    password = generate_password()
+    driver.get(UrlsList.main_page)
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.main_page))
+    driver.find_element(By.XPATH, TestLocators.PERSONAL_ACCOUNT_BUTTON).click()
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.authorization))
+    driver.find_element(By.XPATH, TestLocators.REGISTER_TEXT_BUTTON).click()
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.registration))
+    driver.find_element(By.XPATH, TestLocators.INPUT_NAME).send_keys(name)
+    driver.find_element(By.XPATH, TestLocators.INPUT_EMAIL).send_keys(mail)
+    driver.find_element(By.XPATH, TestLocators.INPUT_PASS).send_keys(password)
+    driver.find_element(By.XPATH, TestLocators.REGISTER_BUTTON).click()
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.authorization))
+    driver.find_element(By.XPATH, TestLocators.INPUT_EMAIL).send_keys(mail)
+    driver.find_element(By.XPATH, TestLocators.INPUT_PASS).send_keys(password)
+    driver.find_element(By.XPATH, TestLocators.ENTER_BUTTON).click()
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.main_page))
+    driver.find_element(By.XPATH, TestLocators.PERSONAL_ACCOUNT_BUTTON).click()
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.profile))
+    assert driver.current_url == UrlsList.profile

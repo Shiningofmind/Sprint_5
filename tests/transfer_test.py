@@ -1,14 +1,21 @@
-from time import sleep
-from selenium import webdriver
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
-driver = webdriver.Chrome()
-driver.maximize_window()
-driver.get('https://stellarburgers.nomoreparties.site/login')
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/fieldset[1]/div/div/input").send_keys("nelli_malyutina_12_627@yandex.ru")
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/fieldset[2]/div/div/input").send_keys("9wDnfy")
-driver.find_element(By.XPATH, "/html/body/div/div/main/div/form/button").click()
-sleep(2)
-driver.find_element(By.LINK_TEXT, "Личный Кабинет").click()
-driver.find_element(By.LINK_TEXT, "Конструктор").click()
-sleep(5)
-driver.quit()
+from data import User
+from urls import UrlsList
+from locators import TestLocators
+
+def test_transfer(driver):
+    mail = User.my_email
+    password = User.my_password
+    driver.get(UrlsList.authorization)
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.authorization))
+    driver.find_element(By.XPATH, TestLocators.INPUT_EMAIL).send_keys(mail)
+    driver.find_element(By.XPATH, TestLocators.INPUT_PASS).send_keys(password)
+    driver.find_element(By.XPATH, TestLocators.ENTER_BUTTON).click()
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.main_page))
+    driver.find_element(By.XPATH, TestLocators.PERSONAL_ACCOUNT_BUTTON).click()
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.profile))
+    driver.find_element(By.XPATH, TestLocators.CONSTRUCTOR_BUTTON).click()
+    WebDriverWait(driver, 3).until(expected_conditions.url_to_be(UrlsList.main_page))
+    assert driver.current_url == UrlsList.main_page
