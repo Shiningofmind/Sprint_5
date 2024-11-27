@@ -1,7 +1,0 @@
-main_page = 'https://stellarburgers.nomoreparties.site/'
-registration = 'https://stellarburgers.nomoreparties.site/register'
-login = 'https://stellarburgers.nomoreparties.site/login'
-recover = 'https://stellarburgers.nomoreparties.site/forgot-password'
-profile = 'https://stellarburgers.nomoreparties.site/account/profile'
-
-
