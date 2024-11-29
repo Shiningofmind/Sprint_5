@@ -21,10 +21,13 @@ class TestLocators:
 
 
     # Сообщения, надписи
-    ERROR_PASS = "//*[contains(@class, 'input__error text_type_main-default')]" # Сообщение о неккоректином пароле
-    ASSEMBLE_BURGER = "//*[contains(@class, 'text text_type_main-large mb-5 mt-10') and text() ='Соберите бургер']" # Надпись Соберите бургер
-    LOGO_STELLAR_BURGERS = "//*[contains(@class, 'AppHeader_header__logo')]"  # Логотип бургерной
-    BUNS_TEXT = "//*[contains(@class, 'text text_type_main-medium') and text() ='Булки']" # Надпись булки в конструкторе
-    SAUCES_TEXT = "//*[contains(@class, 'text text_type_main-medium') and text() ='Соусы']"  # Надпись соусы в конструкторе
-    FILLINGS_TEXT = "//*[contains(@class, 'text text_type_main-medium') and text() ='Начинки']"  # Надпись начинки в конструкторе
-    BUNS_TEXT_SELECT = "//*[contains(@class, 'tab_tab_type_current') and text() ='Булки']"
+    ERROR_PASS_SELECT = "//*[contains(@class, 'input__error text_type_main-default')]" # Сообщение о неккоректином пароле
+    ASSEMBLE_BURGER_SELECT = "//*[contains(@class, 'text text_type_main-large mb-5 mt-10') and text() ='Соберите бургер']" # Надпись Соберите бургер
+    LOGO_STELLAR_BURGERS_SELECT = "//*[contains(@class, 'AppHeader_header__logo')]"  # Логотип бургерной
+    BUNS_TEXT_SELECT_OLD = "//*[contains(@class, 'text text_type_main-medium') and text() ='Булки']" # Надпись булки в конструкторе
+    SAUCES_TEXT_SELECT_OLD = "//*[contains(@class, 'text text_type_main-medium') and text() ='Соусы']"  # Надпись соусы в конструкторе
+    FILLINGS_TEXT_SELECT_OLD = "//*[contains(@class, 'text text_type_main-medium') and text() ='Начинки']"  # Надпись начинки в конструкторе
+    BUNS_TEXT_SELECT = "//*[contains(@class, 'tab_tab_type_current')]//span[contains(text(), 'Булки')]"
+    SAUCES_TEXT_SELECT = "//*[contains(@class, 'tab_tab_type_current')]//span[contains(text(), 'Соусы')]"
+    FILLINGS_TEXT_SELECT = "//*[contains(@class, 'tab_tab_type_current')]//span[contains(text(), 'Начинки')]"
+    #BUNS_TEXT_SELECT = "//*[contains(@class, 'text tab_tab_type_current')"
